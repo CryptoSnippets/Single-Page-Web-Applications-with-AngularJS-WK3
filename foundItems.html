@@ -1,0 +1,15 @@
+
+<div id="foundItems" ng-if="foundItems.length > 0">
+<br /><br /><br />
+
+<ul>
+  <li ng-repeat="item in foundItems">{{ item.name }} :: {{ item.short_name }} :: {{ item.description }} -
+    <button class="btn btn-danger pull-right" ng-click="onRemove({index: $index})">
+      Don't want this one!
+    </button>
+  </li>
+</ul>
+  
+</div>
+<br /><br />
+<div id="nothingFound" class="text-center alert alert-danger" ng-if="foundItems.length === 0">Nothing found.</div>
