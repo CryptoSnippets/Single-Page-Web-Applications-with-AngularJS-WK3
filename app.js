@@ -9,14 +9,19 @@ angular.module('NarrowItDownApp', [])
 	NarrowItDownController.$inject = ['MenuSearchService'];
 	function NarrowItDownController(MenuSearchService) {
 		var nidCtrl = this;
-
+		
 		nidCtrl.searchTerm = '';
 
-		nidCtrl.getMatchedMenuItems = function () {
-			MenuSearchService.getMatchedMenuItems(nidCtrl.searchTerm)
-			.then(function (response) {
-				nidCtrl.found = response;
-			});
+		nidCtrl.getMatchedMenuItems = function (searchTerm) {
+			if(nidCtrl.searchTerm !== undefined && nidCtrl.searchTerm !== null && nidCtrl.searchTerm !== '') {
+				var promise = MenuSearchService.getMatchedMenuItems(nidCtrl.searchTerm);
+				promise.then(function (response) {
+					nidCtrl.found = response;
+				});
+			} else {
+				
+			nidCtrl.found = [];
+			}
 		};
 
 		nidCtrl.removeItem = function (index) {
@@ -35,8 +40,8 @@ angular.module('NarrowItDownApp', [])
 				url: 'https://davids-restaurant.herokuapp.com/menu_items.json'
 			}).then(function (result) {
 			    // process result and only keep items that match
-			    var data = result.data.menu_items;
 			    var foundItems = [];
+			    var data = result.data.menu_items;
 
 			    // return processed items
 			    for (var i = 0; i < data.length; i++) {
